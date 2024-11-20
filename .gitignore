@@ -1,2 +1,5 @@
 dump
 *.csv
+*.docx
+*.xlsx
+*.zip
