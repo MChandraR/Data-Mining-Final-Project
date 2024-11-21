@@ -87,14 +87,14 @@ class MyARIMA():
     
     def predict(self, x=1):
         pred = self.model_fit.forecast(steps=x) 
-        plt.figure(figsize=(10, 6))
-        plt.plot(self.data, label='Data Aktual')
-        plt.plot(pred, label='Prediksi', color='red')
-        plt.title('Prediksi Penjualan Parfum Bulanan')
-        plt.xlabel('Waktu')
-        plt.ylabel('Penjualan')
-        plt.legend()
-        plt.show()
+        # plt.figure(figsize=(10, 6))
+        # plt.plot(self.data, label='Data Aktual')
+        # plt.plot(pred, label='Prediksi', color='red')
+        # plt.title('Prediksi Penjualan Parfum Bulanan')
+        # plt.xlabel('Waktu')
+        # plt.ylabel('Penjualan')
+        # plt.legend()
+        # plt.show()
 
         print("Hasil prediksi ")
         print(pred)
@@ -115,22 +115,27 @@ class MyARIMA():
         
         print(forecast_inverse_df)
 
-        plt.figure(figsize=(10, 6))
-        plt.plot(self.original_data.index, self.original_data['penjualan'], label='Data Aktual Asli', alpha=0.7)
-        plt.plot(forecast_inverse_df['Tanggal'], forecast_inverse_df['Prediksi Skala Asli'], label='Prediksi (Inverse)', color='red', linestyle='--')
-        plt.title('Prediksi vs Data Aktual pada Skala Asli')
-        plt.xlabel('Waktu')
-        plt.ylabel('Penjualan')
-        plt.legend()
-        plt.show()
+        # plt.figure(figsize=(10, 6))
+        # plt.plot(self.original_data.index, self.original_data['penjualan'], label='Data Aktual Asli', alpha=0.7)
+        # plt.plot(forecast_inverse_df['Tanggal'], forecast_inverse_df['Prediksi Skala Asli'], label='Prediksi (Inverse)', color='red', linestyle='--')
+        # plt.title('Prediksi vs Data Aktual pada Skala Asli')
+        # plt.xlabel('Waktu')
+        # plt.ylabel('Penjualan')
+        # plt.legend()
+        # plt.show()
+        
+        return {
+            "tanggal" : pred.index,
+            "value" : inverse_forecast
+        }
 
 
 data = pd.read_csv('data.csv')  
 model = MyARIMA(data)
 model.dif()
-if(model.checkStationary()):
-    # model.train(param=(2,1,1))
-    model.predict(10)
+# if(model.checkStationary()):
+#     # model.train(param=(2,1,1))
+#     model.predict(10)
 
 
 

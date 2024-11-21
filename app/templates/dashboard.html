@@ -21,14 +21,24 @@
         </div>
     </div>
 
-    <div  class="canvas">
-        <canvas id="main" />
+
+    <div class="main">
+        <div  class="canvas">
+            <canvas id="main" />
+        </div>
+    
+        <div  class="canvas">
+            <canvas id="predictCanvas" />
+        </div>
     </div>
+
    
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         let canvas = document.getElementById("main");
+        let predCanv = document.getElementById("predictCanvas");
+        let predictCanvas = null;
         
         const data = {
         labels : [0,1,2,3,4,5,6],
@@ -88,6 +98,68 @@
     
         let cnv = new Chart(canvas, config);
     
+
+        async function fetchData(){
+            try{
+                const response = await fetch('/predict');
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+            
+                const json = await response.json();
+                console.log(json);
+                
+                if(predictCanvas!=null){
+                    predictCanvas.clear();
+                }
+                
+                const max = json['value'].reduce((a, b) => Math.max(a, b), -Infinity);
+                const min = json['value'].reduce((a, b) => Math.min(a, b));
+                console.log(json['value']);
+                console.log(Math.floor(min/50) * 50);
+                predictCanvas = new Chart(predCanv,{
+                    type: 'line',
+                    data: {
+                        labels :  json['data'],
+                        datasets : [{
+                            label : 'Test',
+                            data : json['value']
+                        }]
+                    },
+                    options: {
+                    scales: {
+                        y: {
+                            suggestedMin: Math.floor(min/50) * 50,
+                            suggestedMax: Math.ceil(max/50) * 50
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                            labels: {
+                                color: 'rgb(255, 99, 132)'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: `Prediksi Penjualan Parfum dalam ${json['value'].length} bulan ke depan`,
+                            color : '#ffff',
+                            font : {
+                                weight : 'bold',
+                                size : 18
+                            }
+                        }
+                    }
+                    },
+                });
+
+            }catch(e){
+                console.log(e.message);
+            }
+           
+        }
+
+        fetchData();
       
     </script>
 </body>

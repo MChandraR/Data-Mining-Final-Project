@@ -5,3 +5,7 @@
     height: 75vh;
     margin : 2rem;
 }
+
+.main{
+    display : flex;
+}
