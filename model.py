@@ -1,4 +1,4 @@
-import pandas as pd
+import light_pandas as pd
 import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
@@ -7,6 +7,7 @@ import numpy as np
 from statsmodels.tsa.stattools import adfuller
 import pickle
 import os
+import csv
 
 class MyARIMA():
     def __init__(self, data):
