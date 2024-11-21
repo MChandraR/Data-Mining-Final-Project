@@ -3,7 +3,6 @@ import light_matplotlib.pyplot as plt
 from light_stats.tsa.arima.model import ARIMA
 from light_stats.graphics.tsaplots import plot_acf, plot_pacf
 # from lsklearn.metrics import mean_squared_error
-import numpy as np
 from light_stats.tsa.stattools import adfuller
 import pickle
 import os
