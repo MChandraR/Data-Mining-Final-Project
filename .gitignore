@@ -3,3 +3,5 @@ dump
 *.docx
 *.xlsx
 *.zip
+*.pptx
+env/
