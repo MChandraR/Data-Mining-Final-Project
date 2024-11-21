@@ -1,5 +1,5 @@
 import light_pandas as pd
-import matplotlib.pyplot as plt
+import light_matplotlib.pyplot as plt
 from light_stats.tsa.arima.model import ARIMA
 from light_stats.graphics.tsaplots import plot_acf, plot_pacf
 from sklearn.metrics import mean_squared_error
