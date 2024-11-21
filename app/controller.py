@@ -15,6 +15,9 @@ def index():
 def regist():
     return render_template('register.html')
 
+def dashboard():
+    return render_template('dashboard.html')
+
 def getPenjualan():
     try:
         uri = f"mongodb+srv://{dbuser}:{dbpass}@mydb.rvfulzg.mongodb.net/?retryWrites=true&w=majority&appName=myDB"

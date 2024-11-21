@@ -1,0 +1,7 @@
+.canvas{
+    display: flex;
+    align-items: center;
+    width: 50vw;
+    height: 75vh;
+    margin : 2rem;
+}

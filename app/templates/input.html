@@ -11,6 +11,13 @@
     <div class="navbar">
         <img  src="/static/images/icon/list.png" width="30" alt="">
         <h2>BABA PARFUME</h2>
+        <div class="menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/input">Input</a>
+            <a href="/logout">Keluar</a>
+            <img  src="/static/images/icon/user.png" width="30" alt="">
+
+        </div>
     </div>
 
     <div class="main">
@@ -38,7 +45,7 @@
 
         <div class="data-area">
             <div class="table">
-                <input style="width : 50%;" type="text" placeholder="Cari data" class="text">
+                <input style="width : 50%;" id="search" type="text" placeholder="Cari data" class="text">
             </div>
 
             <div class="table">
@@ -49,8 +56,8 @@
                 </div>
             </div>
         
-            <div class="table" style="height : 60vh;">   
-                <table>
+            <div class="table" style="height : 50vh;">   
+                <table style="height: fit-content;">
                     <tbody id="tbody">
                         
                     </tbody>
@@ -65,10 +72,24 @@
 <script>
     let body = document.getElementById('tbody');
     let input = document.getElementById('input');
+    let search = document.getElementById('search');
     let aroma = document.getElementById('aroma');
     let waktu = document.getElementById('waktu');
     let jumlah = document.getElementById('jumlah');
 
+
+    search.addEventListener('change', (e)=>{
+        let child = body.children;
+        let key = search.value.toLowerCase();
+        for(let i = 0; i < child.length; i++){
+            let tr = child[i].children;
+            if(tr[0].innerHTML.toLowerCase().includes(key) || tr[1].innerHTML.toLowerCase().includes(key) || tr[2].innerHTML.toLowerCase().includes(key)){
+                child[i].style.display = "table-row";
+            }else{
+                child[i].style.display = "none";
+            }
+        }
+    });
 
     input.addEventListener('click', async(e)=>{
         e.preventDefault();
@@ -109,7 +130,7 @@
             console.log(json);
 
             json["data"].forEach((e)=>{
-                body.innerHTML += `<tr>
+                body.innerHTML += `<tr style='height: 2rem;'>
                     <td>${e.aroma}</td>
                     <td>${e.waktu}</td>
                     <td>${e.jumlah}</td>
