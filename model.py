@@ -2,7 +2,7 @@ import light_pandas as pd
 import light_matplotlib.pyplot as plt
 from light_stats.tsa.arima.model import ARIMA
 from light_stats.graphics.tsaplots import plot_acf, plot_pacf
-from sklearn.metrics import mean_squared_error
+# from lsklearn.metrics import mean_squared_error
 import numpy as np
 from light_stats.tsa.stattools import adfuller
 import pickle
@@ -82,8 +82,8 @@ class MyARIMA():
         with open("model.pkl", "wb") as models:
             pickle.dump(self.model_fit, models)
 
-        rmse = np.sqrt(mean_squared_error(test, forecast))
-        print(f'RMSE: {rmse}')
+        # rmse = np.sqrt(mean_squared_error(test, forecast))
+        # print(f'RMSE: {rmse}')
     
     def predict(self, x=1):
         pred = self.model_fit.forecast(steps=x) 
