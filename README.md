@@ -1,7 +1,7 @@
 # Project-Akhir-Data-Mining
 Ini merupakan project akhir dari mata kuliah Data Mining
 
-Anggota :
+Anggota:
 
  2201020103 - Muhammad Chandra Ramadhan
  
