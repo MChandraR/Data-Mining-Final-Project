@@ -6,3 +6,4 @@ dump
 *.pptx
 env
 .env
+.vercel
