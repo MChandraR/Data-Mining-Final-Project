@@ -4,4 +4,5 @@ dump
 *.xlsx
 *.zip
 *.pptx
-env/
+env
+.env

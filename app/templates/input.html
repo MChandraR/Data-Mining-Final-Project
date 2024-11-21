@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/input.css">
+    <link rel="stylesheet" href="/static/css/font/ubuntu.css">
+</head>
+<body>
+    <div class="navbar">
+        <img  src="/static/images/icon/list.png" width="30" alt="">
+        <h2>BABA PARFUME</h2>
+    </div>
+
+    <div class="main">
+        <div class="input-area">
+            <div class="form">
+                <h1 style="text-align : center;">DATA <br>PENJUALAN</h1>
+                <form action="/input">
+                    <label for="Input">Aroma : </label><br>
+                    <input type="text" class="text" id="aroma"><br>
+
+                    <label for="Input">Waktu : </label><br>
+                    <input type="date" class="datetime" id="waktu">
+
+                    <label for="Input">Jumlah Penjualan : </label><br>
+                    <input type="number" class="text" id="jumlah"><br>
+                    
+                    <center>
+                        <button class="submit" id="input">Tambahkan</button>
+                    </center>
+                </form>
+            </div>
+
+        </div>
+
+
+        <div class="data-area">
+            <div class="table">
+                <input style="width : 50%;" type="text" placeholder="Cari data" class="text">
+            </div>
+
+            <div class="table">
+                <div class="thead">
+                    <span>Aroma</span>
+                    <span>Waktu</span>
+                    <span>Penjualan</span>
+                </div>
+            </div>
+        
+            <div class="table" style="height : 60vh;">   
+                <table>
+                    <tbody id="tbody">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<script>
+    let body = document.getElementById('tbody');
+    let input = document.getElementById('input');
+    let aroma = document.getElementById('aroma');
+    let waktu = document.getElementById('waktu');
+    let jumlah = document.getElementById('jumlah');
+
+
+    input.addEventListener('click', async(e)=>{
+        e.preventDefault();
+        try {
+            const response = await fetch("/input", { 
+              method : "POST" ,
+              headers : {
+                "content-type" : "application/json"
+              },
+              body : JSON.stringify({
+                  aroma : aroma.value,
+                  waktu : waktu.value,
+                  jumlah : jumlah.value
+              })
+          } );
+            if (!response.ok) {
+              throw new Error(`Response status: ${response.status}`);
+            }
+        
+            const json = await response.json();
+            console.log(json);
+            fetchData();
+          } catch (error) {
+            console.error(error.message);
+          }
+    });
+
+
+    async function fetchData(){
+        try {
+            const response = await fetch("/penjualan");
+            if (!response.ok) {
+              throw new Error(`Response status: ${response.status}`);
+            }
+        
+            body.innerHTML = "";
+            const json = await response.json();
+            console.log(json);
+
+            json["data"].forEach((e)=>{
+                body.innerHTML += `<tr>
+                    <td>${e.aroma}</td>
+                    <td>${e.waktu}</td>
+                    <td>${e.jumlah}</td>
+                </tr>`;
+            });
+          } catch (error) {
+            console.error(error.message);
+          }
+    }
+
+    fetchData();
+
+  
+</script>
