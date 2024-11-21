@@ -1,9 +1,11 @@
-import light_pandas as pd
-import light_matplotlib.pyplot as plt
-from light_stats.tsa.arima.model import ARIMA
-from light_stats.graphics.tsaplots import plot_acf, plot_pacf
+# import sys, os
+# sys.path.append(os.path.abspath(os.path.join('lib')))
+import pandas as pd
+import matplotlib.pyplot as plt
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 # from lsklearn.metrics import mean_squared_error
-from light_stats.tsa.stattools import adfuller
+from statsmodels.tsa.stattools import adfuller
 import pickle
 import os
 
@@ -133,7 +135,7 @@ data = pd.read_csv('data.csv')
 model = MyARIMA(data)
 model.dif()
 # if(model.checkStationary()):
-#     # model.train(param=(2,1,1))
+#  model.train(param=(2,1,1))
 #     model.predict(10)
 
 
