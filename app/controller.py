@@ -8,7 +8,7 @@ import sys, os
 
 sys.path.append(os.path.abspath(os.path.join('..', '')))
 print(os.path.abspath(os.path.join('..', 'app')))
-from model import MyARIMA, model
+# from model import MyARIMA, model
 
 dotenv.load_dotenv()
 dbuser = os.environ.get("DBUSER","")
@@ -24,11 +24,12 @@ def dashboard():
     return render_template('dashboard.html')
 
 def predict():
-    predict = model.predict(6)
-    return jsonify({
-        "data" : [str(date)[:10] for date in predict['tanggal']],
-        "value" : predict['value']
-    })
+    return "Hllo"
+    # predict = model.predict(6)
+    # return jsonify({
+    #     "data" : [str(date)[:10] for date in predict['tanggal']],
+    #     "value" : predict['value']
+    # })
 
 def getPenjualan():
     try:
