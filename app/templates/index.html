@@ -27,17 +27,17 @@
                 </center>
                 <form action="/login" method="POST">
                     <label for="">Email</label><br>
-                    <input type="text" name="email" placeholder="Masukkan username "><br>
+                    <input type="text" id="email" name="email" placeholder="Masukkan username "><br>
                     <br>
                     <label for="">Password</label><br>
-                    <input type="text" name="password" placeholder="Masukkan password ">
+                    <input type="password" id="password" name="password" placeholder="Masukkan password ">
                     <br>
-                    <button>LOGIN</button>
+                    <button  id="login" >LOGIN</button>
                 </form>
                 <center>
                     <h3 style="margin: 0; font-size : 1rem;">Dont have account ? </h3>
                     <a href="/register">
-                        <button class="btn-signup" type="submit">SIGN-UP</button>
+                        <button class="btn-signup"type="submit">SIGN-UP</button>
                     </a>
                 </center>
 
@@ -47,3 +47,51 @@
     <!-- <img src="/static/images/shadow.png" class="shadow" alt=""> -->
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    let login = document.getElementById("login");
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
+
+    login.addEventListener('click', async(e)=>{
+        e.preventDefault();
+
+        try{
+            let response = await fetch('/login', {
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                method : "POST",
+                body : JSON.stringify({
+                    "email" : email.value,
+                    "password" : password.value
+                })
+            });
+    
+            if(!response.ok){
+                let res = await Swal.fire({
+                    title: "Error ",
+                    text: response.statusText,
+                    icon: "error"
+                  });
+                  return;
+            }
+    
+            let data = await response.json();
+            console.log(data);
+            let res = await Swal.fire({
+                title: data.status == 200 ? "Berhasil" : "Error",
+                text: data.message,
+                icon: data.status == 200 ? "success": "error"
+              });
+            if(data.status == 200) window.location.href="/dashboard";
+        }catch(e){
+            let res = await Swal.fire({
+                title: "Error ",
+                text: e.message,
+                icon: "error"
+            });
+        }
+        
+    });
+</script>

@@ -18,7 +18,33 @@ def index():
     return render_template('index.html')
 
 def regist():
-    return render_template('register.html')
+    if request.method=="GET" : return render_template('register.html')
+    
+    try:
+        data = request.get_json()
+        uri = f"mongodb+srv://{dbuser}:{dbpass}@mydb.rvfulzg.mongodb.net/?retryWrites=true&w=majority&appName=myDB"
+        client = MongoClient(uri)
+        database = client["baba"]
+        collection = database["users"].insert_one({
+            "email" : data["email"],
+            "password" : data["password"]
+        })
+        print(collection)
+        client.close()
+     
+        return jsonify({
+            "status" : 200,
+            "message" : "Berhasil mendaftarkan akun !",
+            "data" : None
+        })
+    
+    
+    except Exception as e:
+        return jsonify({
+            "status" : 201,
+            "message" : "Gagal mendaftarkan akun !" + e,
+            "data" : None
+        })
 
 def dashboard():
     return render_template('dashboard.html')
@@ -101,14 +127,14 @@ def input():
 
 def login():
     #body = request.get_json()
-    email = request.form.get("email")
-    password = request.form.get("password")
+    email = request.get_json()['email']
+    password = request.get_json()['password']
     
     try:
         uri = f"mongodb+srv://{dbuser}:{dbpass}@mydb.rvfulzg.mongodb.net/?retryWrites=true&w=majority&appName=myDB"
         client = MongoClient(uri)
         database = client["baba"]
-        collection = database["users"].find_one({"username" : email, "password" : password})
+        collection = database["users"].find_one({"email" : email, "password" : password})
         print(collection)
         client.close()
     except Exception as e:

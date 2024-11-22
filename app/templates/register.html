@@ -27,15 +27,15 @@
                 </center>
                 <form action="/login" method="POST">
                     <label for="">Email</label><br>
-                    <input type="text" placeholder="Masukkan username "><br>
+                    <input type="text" id="email" placeholder="Masukkan email "><br>
                     <br>
                     <label for="">Password</label><br>
-                    <input type="text" placeholder="Masukkan password "><br>
+                    <input type="text" id="password" placeholder="Masukkan password "><br>
                     <br>
                     <label for="">Password</label><br>
-                    <input type="text" placeholder="Masukkan password ">
+                    <input type="text" id="confpassword" placeholder="Masukkan password ">
                     <br>
-                    <button>REGISTER</button>
+                    <button id="register">REGISTER</button>
                 </form>
                 <center>
                     <h3 style="margin: 0; font-size : 1rem;">Already have account ? </h3>
@@ -50,3 +50,53 @@
     <!-- <img src="/static/images/shadow.png" class="shadow" alt=""> -->
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    let register = document.getElementById("register");
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
+
+    register.addEventListener('click', async (e)=>{
+        e.preventDefault();
+
+        try{
+            let response = await fetch('/register',{
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                method : "POST",
+                body : JSON.stringify({
+                    email : email.value,
+                    password : password.value
+                })
+            });
+
+            if(!response.ok){
+                let res = await Swal.fire({
+                    title: "Error ",
+                    text: response.statusText,
+                    icon: "error"
+                  });
+                  return;
+            }
+    
+            let data = await response.json();
+            console.log(data);
+            let res = await Swal.fire({
+                title: data.status == 200 ? "Berhasil" : "Error",
+                text: data.message,
+                icon: data.status == 200 ? "success": "error"
+              });
+            if(data.status == 200) window.location.href="/";
+
+        }catch(e){
+            let res = await Swal.fire({
+                title: "Error ",
+                text: e.message,
+                icon: "error"
+            });
+        }
+
+    });
+</script>
