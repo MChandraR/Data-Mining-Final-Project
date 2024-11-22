@@ -109,3 +109,51 @@ h3::after {
 .logo{
     width: 15vw;
 }
+
+@media only screen 
+and (max-device-width: 600px)
+{
+    body{
+        background-size: fill;
+    }
+
+    button{ 
+        color : white;
+        padding : .5rem;
+        width: 100%;
+        margin: 1rem 0;
+        font-weight : bold;
+    }
+    
+    .container{
+        z-index: 1;
+        height: auto;
+        display : grid;
+        grid-template-columns: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container{
+        display: grid;
+        grid-template-columns: 90%;
+        justify-content: center;
+        padding: 1rem 1rem;
+    }
+
+    .login{
+        font-weight : bold;
+        color: black;
+        padding : 2rem;
+        border-radius: .5rem;
+        background-color:rgba(255, 255, 255, 0.627);
+    }
+
+    .brand{
+        display: none;
+    }
+
+    .main{
+        padding-top: 5rem;
+    }
+}
