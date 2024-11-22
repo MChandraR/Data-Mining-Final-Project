@@ -1,7 +1,7 @@
 # import sys, os
 # sys.path.append(os.path.abspath(os.path.join('lib')))
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 # from lsklearn.metrics import mean_squared_error
@@ -45,17 +45,17 @@ class MyARIMA():
         if step == 0 : step = len(self.data)-1
         self.data = self.data.resample('ME').sum()
 
-        plt.figure(figsize=(10, 5))
-        plt.plot(self.data, label='Penjualan Bulanan')
-        plt.title('Penjualan Parfum Bulanan')
-        plt.xlabel('Waktu')
-        plt.ylabel('Penjualan')
-        plt.legend()
-        plt.show()
+        # plt.figure(figsize=(10, 5))
+        # plt.plot(self.data, label='Penjualan Bulanan')
+        # plt.title('Penjualan Parfum Bulanan')
+        # plt.xlabel('Waktu')
+        # plt.ylabel('Penjualan')
+        # plt.legend()
+        # plt.show()
 
-        plot_acf(self.data)
-        plot_pacf(self.data)
-        plt.show()
+        # plot_acf(self.data)
+        # plot_pacf(self.data)
+        # plt.show()
 
         p, d, q = param 
 
@@ -64,11 +64,11 @@ class MyARIMA():
         print(self.model_fit.summary())
         
         residuals = self.model_fit.resid
-        plt.figure(figsize=(10, 6))
-        plt.plot(residuals, label='Residuals')
-        plt.title('Residuals dari Model ARIMA')
-        plt.legend()
-        plt.show()
+        # plt.figure(figsize=(10, 6))
+        # plt.plot(residuals, label='Residuals')
+        # plt.title('Residuals dari Model ARIMA')
+        # plt.legend()
+        # plt.show()
 
         train = self.data[:-len(self.data)+1] 
         test = self.data[-len(self.data)+1:]  
