@@ -34,4 +34,4 @@ sns.lineplot(x='Bulan', y='Total Item Terjual', data=cleaned_sales_data, marker=
 plt.title('Tren Total Item Terjual per Bulan', fontsize=14)
 plt.xlabel('Bulan', fontsize=12)
 plt.ylabel('Total Item Terjual', fontsize=12)
-plt.show()
+plt.show() 
