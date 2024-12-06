@@ -8,7 +8,7 @@ import sys, os
 
 sys.path.append(os.path.abspath(os.path.join('..', '')))
 print(os.path.abspath(os.path.join('..', 'app')))
-# from model import MyARIMA, model
+from model import MyARIMA, model
 
 dotenv.load_dotenv()
 dbuser = os.environ.get("DBUSER","")
@@ -50,18 +50,20 @@ def dashboard():
     return render_template('dashboard.html')
 
 def predict():
-    return "Hllo"
-    # predict = model.predict(6)
-    # return jsonify({
-    #     "data" : [str(date)[:10] for date in predict['tanggal']],
-    #     "value" : predict['value']
-    # })
+    # return "Hllo"
+    return "No predict"
+    predict = model.predict(6)
+    return jsonify({
+        "data" : [str(date)[:10] for date in predict['tanggal']],
+        "value" : predict['value']
+    })
 
 def getPenjualan():
     try:
         uri = f"mongodb+srv://{dbuser}:{dbpass}@mydb.rvfulzg.mongodb.net/?retryWrites=true&w=majority&appName=myDB"
         client = MongoClient(uri)
         database = client["baba"]
+        # collection = database["penjualan"].delete_many({})
         collection = database["penjualan"].find().sort('waktu', pymongo.DESCENDING)
         print(collection)
         client.close()
@@ -86,7 +88,7 @@ def getPenjualan():
     except Exception as e:
         return jsonify({
             "status" : 201,
-            "message" : "Gagal mengambil data !" + e,
+            "message" : "Gagal mengambil data !" + str(e),
             "data" : None
         })
 
