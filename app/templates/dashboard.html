@@ -32,18 +32,20 @@
     </div>
 
    
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-adapter-moment/1.0.1/chartjs-adapter-moment.min.js"></script>
     <script>
         let canvas = document.getElementById("main");
         let predCanv = document.getElementById("predictCanvas");
         let predictCanvas = null;
         
         const data = {
-        labels : [0,1,2,3,4,5,6],
+        labels : [],
         datasets: [{
             label: 'Data Penjualan Parfum Bulanan',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: [],
             backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)',
@@ -70,10 +72,25 @@
             type: 'bar',
             data: data,
             options: {
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
+                responsive: true,
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    },
+                    x : {
+                        type : 'time',
+                        time: {
+                            unit: 'month',
+                            tooltipFormat: 'YYYY-MM-DD',
+                            displayFormats: {
+                                day: 'MM-YYYY'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Bulan Penjualan'
+                        }
+                    }
               },
               plugins: {
                 legend: {
@@ -158,7 +175,36 @@
            
         }
 
+        async function  fetchDataPenjualan(){
+            let data = {};
+            $.ajax({
+                url : "/penjualan"
+            }).done((res)=>{
+                res.data.forEach((val)=>{
+                    if(data[val.waktu.substring(0,7) + "-01"]==null) data[val.waktu.substring(0,7)+ "-01"]= parseInt(val.jumlah);
+                    else data[val.waktu.substring(0, 7) + "-01"] += parseInt(val.jumlah);
+                });
+
+                console.log(data);
+
+                Object.keys(data).forEach((dat)=>{
+                    console.log(dat);
+                    cnv.data.labels.push(new Date(dat));
+                });
+
+                cnv.data.datasets.forEach((dat)=>{
+                    Object.values(data).forEach((e)=>{
+                        dat.data.push(e);
+                    });
+                    console.log(Object.values(data));
+                });
+
+                cnv.update();
+            });
+        }
+
         fetchData();
+        fetchDataPenjualan();
       
     </script>
 </body>
