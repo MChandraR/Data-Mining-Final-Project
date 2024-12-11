@@ -57,6 +57,7 @@
         e.preventDefault();
 
         try{
+            login.disabled = true;
             let response = await fetch('/login', {
                 headers : {
                     'content-type' : 'application/json'
@@ -91,7 +92,8 @@
                 text: e.message,
                 icon: "error"
             });
+        }finally{
+            login.disabled = false;
         }
-        
     });
 </script>
