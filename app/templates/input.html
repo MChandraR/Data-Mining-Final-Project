@@ -54,6 +54,7 @@
                     <span>Aroma</span>
                     <span>Waktu</span>
                     <span>Penjualan</span>
+                    <span>Hapus</span>
                 </div>
             </div>
         
@@ -69,7 +70,8 @@
     
 </body>
 </html>
-
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     let body = document.getElementById('tbody');
     let input = document.getElementById('input');
@@ -135,12 +137,46 @@
                     <td>${e.aroma}</td>
                     <td>${e.waktu}</td>
                     <td>${e.jumlah}</td>
+                    <td>
+                        <button class="delete" onClick="deleteData('${e._id}')">Hapus</button>
+                    </td>
                 </tr>`;
             });
           } catch (error) {
             console.error(error.message);
           }
     }
+
+    function deleteData(id){
+        console.log(id);
+        $.ajax({
+            url : "/delete",
+            method : "POST",
+            headers : {
+                "content-type" : "application/json"
+            },
+            data : JSON.stringify({
+                _id : id
+            }),
+            success : (res)=>{
+                console.log(res);
+                Swal.fire({
+                    icon : res.status == 200 ? "success" : "error",
+                    title : res.status == 200 ? "Berhasil" : "Gagal",
+                    text : res.message
+                });
+                fetchData();
+            },
+            error : (err)=>{
+                console.log(err.statusText);
+                Swal.fire({
+                    icon : "error",
+                    title :"Gagal",
+                    text : err.statusText
+                });
+            }
+        });
+    }   
 
     fetchData();
 

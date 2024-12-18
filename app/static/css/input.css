@@ -35,7 +35,7 @@ a{
     margin : 2rem;
     width :  calc(100% - 4rem);
     display : grid;
-    grid-template-columns : 50% 50%;
+    grid-template-columns : 40% 60%;
     align-items : center;
     justify-content:  center;
 }
@@ -104,7 +104,7 @@ table{
     margin : .5rem 0;
     width: 70%;
     display : grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: repeat(4, 25%);
     align-items: center;
     justify-content: center;
 }
@@ -145,6 +145,10 @@ tr{
 
 .divider{
     display: none;
+}
+
+.delete{
+    margin : 0;
 }
 
 

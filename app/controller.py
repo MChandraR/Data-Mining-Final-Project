@@ -5,6 +5,7 @@ import os
 import dotenv
 from pymongo import MongoClient
 import sys, os
+from bson.objectid import ObjectId
 
 sys.path.append(os.path.abspath(os.path.join('..', '')))
 print(os.path.abspath(os.path.join('..', 'app')))
@@ -124,6 +125,35 @@ def input():
     return jsonify({
         "status" : 200,
         "message" : "Berhasil",
+        "data" :payload
+    })
+    
+def delete():
+    payload = request.get_json()
+    
+    if(payload["_id"] == "" or payload["_id"]==None):
+        return jsonify({
+            "status" : 201,
+            "message" : "Gagal : Harap periksa kembali data !",
+            "data" : payload
+        })
+    
+    try:
+        uri = f"mongodb+srv://{dbuser}:{dbpass}@mydb.rvfulzg.mongodb.net/?retryWrites=true&w=majority&appName=myDB"
+        client = MongoClient(uri)
+        database = client["baba"]
+        collection = database["penjualan"].delete_one({
+           "_id": ObjectId(payload["_id"])
+        })
+        print(collection)
+        client.close()
+    except Exception as e:
+        raise Exception(
+            "The following error occurred: ", e)
+    
+    return jsonify({
+        "status" : 200,
+        "message" : "Berhasil menghapus data !",
         "data" :payload
     })
 
