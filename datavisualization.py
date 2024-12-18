@@ -46,7 +46,7 @@ plt.show()
 
 plt.figure(figsize=(8, 6))
 sns.heatmap(cleaned_sales_data.corr(), annot=True, cmap='coolwarm', fmt=".2f")
-plt.title('Korelasi Antar Variabel', fontsize=14)
+plt.title('Korelasi Variabel', fontsize=14)
 plt.show()
 
 plt.figure(figsize=(8, 6))
@@ -74,7 +74,7 @@ plt.show()
 
 plt.figure(figsize=(8, 6))
 sns.scatterplot(x='Total Jenis Parfum', y='Total Item Terjual', size='Jumlah', hue='Bulan', data=cleaned_sales_data, alpha=0.6, sizes=(50, 500))
-plt.title('Bubble Chart: Total Jenis Parfum vs Total Item Terjual', fontsize=14)
+plt.title('Total Jenis Parfum vs Total Item Terjual', fontsize=14)
 plt.xlabel('Total Jenis Parfum', fontsize=12)
 plt.ylabel('Total Item Terjual', fontsize=12)
 plt.legend(title='Bulan')
