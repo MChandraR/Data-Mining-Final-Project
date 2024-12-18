@@ -46,7 +46,7 @@ plt.show()
 
 plt.figure(figsize=(8, 6))
 sns.heatmap(cleaned_sales_data.corr(), annot=True, cmap='coolwarm', fmt=".2f")
-plt.title('Korelasi Antar Variabel', fontsize=14)
+plt.title('Korelasi Variabel', fontsize=14)
 plt.show()
 
 plt.figure(figsize=(8, 6))
