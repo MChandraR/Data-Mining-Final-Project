@@ -28,6 +28,7 @@
             <h3 id="totalPenjualan">Total Penjualan : </h3>
             <h3 id="jumlahAroma">Variasi Aroma : </h3>
             <h3 id="terlarisAroma">Aroma Terlaris : </h3>
+            <h3 id="terendahAroma">Aroma Terendah : </h3>
         </div>
        
     
@@ -149,22 +150,22 @@
                     label : 'Data Penjualan Aroma Perbulan',
                     data : [],
                     backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
                     ],
                     borderColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
                     ],
                     borderWidth : 1
                 }]
@@ -327,12 +328,18 @@
                 });
 
                 let count = 0;
+                let min = Object.values(aroma)[0];;
+                let minCount = 0;
                 aromChart.data.datasets.forEach((sets)=>{
-                    Object.values(aroma).forEach((arom)=>{
+                    Object.values(aroma).forEach((arom, idx)=>{
                         sets.data.push(arom);
                         if(arom > terlaris){
                             terlaris = arom;
-                            count ++;
+                            count  = idx;
+                        } 
+                        if(arom<min){
+                            min = arom;
+                            minCount = idx;
                         } 
                     });
                 });
@@ -351,6 +358,7 @@
                 $("#totalPenjualan")[0].innerHTML = `Total Penjualan : ${totalPenjualan} Parfum  [ ${Object.keys(data)[Object.keys(data).length-1].substring(0,7)} - ${Object.keys(data)[0].substring(0,7)} ]`;
                 $("#jumlahAroma")[0].innerHTML = `Variasi Aroma : ${Object.keys(aroma).length} `;
                 $("#terlarisAroma")[0].innerHTML = `Aroma Terlaris : ${Object.keys(aroma)[count]} (${terlaris}) `;
+                $("#terendahAroma")[0].innerHTML = `Aroma Terendah : ${Object.keys(aroma)[minCount]} (${min}) `;
 
             });
         }

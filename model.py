@@ -95,11 +95,11 @@ class MyARIMA():
         rmse = np.sqrt(mean_squared_error(test, forecast))
         mae = mean_absolute_error(test, forecast)
         print(test)
-        mape = np.mean(np.abs((test["penjualan"] - forecast) / test["penjualan"])) * 100
+        self.mape = np.mean(np.abs((test["penjualan"] - forecast) / test["penjualan"])) * 100
         
         print(f'RMSE : {rmse}')
         print(f'MAE  : {mae}')
-        print(f'MAPE : {mape}')
+        print(f'MAPE : {self.mape}')
     
     
     def predict(self, x=1):
@@ -122,7 +122,8 @@ class MyARIMA():
         
         return {
             "tanggal" : pred.index,
-            "value" : inverse_forecast
+            "value" : inverse_forecast,
+            "mape" : self.mape
         }
 
 
