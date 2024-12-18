@@ -191,7 +191,7 @@ and (max-device-width: 600px)
         margin : .5rem 0;
         width: 100%;
         display : grid;
-        grid-template-columns: 33% 33% 33%;
+        grid-template-columns: repeat(4, 25%);
         align-items: center;
         justify-content: center;
     }
