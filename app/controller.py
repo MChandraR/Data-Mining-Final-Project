@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify, Response
+from flask import render_template, request, jsonify, Response, session,url_for, redirect
 import json
 import pymongo
 import os
@@ -48,7 +48,9 @@ def regist():
         })
 
 def dashboard():
-    return render_template('dashboard.html')
+    if 'username' in session and session['username'] == 'admin':
+        return render_template('dashboard.html')
+    return redirect(url_for('home'))
 
 def predict():
     # return "Hllo"
@@ -95,6 +97,9 @@ def getPenjualan():
 
 
 def input():
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('home'))
+    
     if request.method=="GET": return render_template('input.html')
     
     payload = request.get_json()
@@ -174,6 +179,7 @@ def login():
             "The following error occurred: ", e)
         
     if collection is not None and len(collection) > 0:
+        session["username"] = "admin"
         return jsonify({
             "status" : 200,
             "message" : "Berhasil login !",
