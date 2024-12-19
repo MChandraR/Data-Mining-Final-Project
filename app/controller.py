@@ -19,6 +19,8 @@ def index():
     return render_template('index.html')
 
 def regist():
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('home'))
     if request.method=="GET" : return render_template('register.html')
     
     try:
@@ -190,3 +192,7 @@ def login():
             "message" : "Gagal login !",
             "data" : None
         })
+    
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))

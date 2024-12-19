@@ -96,4 +96,15 @@
             login.disabled = false;
         }
     });
+
+    async function setMessage(){
+        await Swal.fire({
+            icon : "info",
+            title :"Informasi",
+            text : "Gunakan user admin dan password admin untuk preview/ujicoba, selanjutnya hanya akan bisa diakses oleh admin terima kasih ^-^ ",
+            confirmButtonText : "Oke"
+        });
+    }
+
+    setMessage();
 </script>

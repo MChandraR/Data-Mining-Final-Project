@@ -9,4 +9,5 @@ class Routes:
         app.add_url_rule("/input",'input', ct.input, methods=["POST", "GET"])
         app.add_url_rule("/delete",'delete', ct.delete, methods=["POST"])
         app.add_url_rule("/login",'login', ct.login, methods=["POST"])
+        app.add_url_rule("/logout",'logout', ct.logout)
         app.add_url_rule("/penjualan",'penjualan', ct.getPenjualan, methods=["GET"])
